@@ -1,0 +1,4 @@
+language: objective-c
+xcode_project: TwitterReverseAuth.xcodeproj # path to your xcodeproj folder
+xcode_scheme: TwitterReverseAuth
+script: xcodebuild test -workspace TwitterReverseAuth.xcworkspace -scheme TwitterReverseAuthTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
