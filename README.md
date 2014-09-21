@@ -3,25 +3,18 @@ Twitter-Reverse-Auth
 
 Twitter Reverse Auth made easy with a single method!
 
-Open SecretKeys.h and add your Token and Token Secret
+Implement delegate methods to provide API token and secret.
 
-Simply include TwitterHelper.h and use the following method:
+Cocoapods available.
 
-    [TwitterHelper getCredentialsForAccount:self.userAccount completion:^(NSDictionary *credentials, NSError *error) {
-        
-        if (!error && credentials) {
-            
-            // Send these credentials to your server
-            
+    ACAccount *account = // your account from ACAccountStore
+    TwitterReverseAuth *auth = [[TwitterReverseAuth alloc] initWithDelegate:self];
+    [auth requestCredentialsForAccount:account completion:^(NSDictionary *credentials, NSError *error) {
+        if (credentials.count > 0) {
+            NSLog(@"credential: %@", credentials);
         } else {
-            
-            // Something went wrong! Handle it!
-            
-            NSLog(@"Reverse Auth process failed. Error returned was: %@\n", [error localizedDescription]);
-            
+            NSLog(@"error: %@", error);
         }
-        
     }];
 
 
-Be sure to import all files into your project. This class uses AFNetworking. 

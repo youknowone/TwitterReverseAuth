@@ -24,19 +24,32 @@
 #import <Accounts/ACAccountStore.h>
 #import <Accounts/ACAccount.h>
 
-extern const struct TwitterCredentials {
-    __unsafe_unretained NSString *oauthToken;
-    __unsafe_unretained NSString *oauthTokenSecret;
-    __unsafe_unretained NSString *userId;
-    __unsafe_unretained NSString *screenName;
-} TwitterCredentials;
+FOUNDATION_EXTERN const NSString *TRATwitterReverseAuthCredentialOAuthToken;
+FOUNDATION_EXTERN const NSString *TRATwitterReverseAuthCredentialOAuthTokenSecret;
+FOUNDATION_EXTERN const NSString *TRATwitterReverseAuthCredentialUserID;
+FOUNDATION_EXTERN const NSString *TRATwitterReverseAuthCredentialScreenName;
 
 
-@interface TwitterHelper : NSObject
-//@property (nonatomic,retain) ACAccountStore *accountStore;
+@class TRATwitterReverseAuth;
 
-+ (void)getCredentialsForAccount:(ACAccount *)account
-                      completion:(void(^)(NSDictionary *credentials, NSError *error))completion;
+@protocol TRATwitterReverseAuthDelegate<NSObject>
 
+- (NSString *)APIKeyForTwitterReverseAuth:(TRATwitterReverseAuth *)reverseAuth;
+- (NSString *)APISecretForTwitterReverseAuth:(TRATwitterReverseAuth *)reverseAuth;
+
+@optional
+
+- (ACAccountStore *)accountStoreForTwitterReverseAuth:(TRATwitterReverseAuth *)reverseAuth;
+
+@end
+
+
+@interface TRATwitterReverseAuth : NSObject
+
+@property(nonatomic,weak) id<TRATwitterReverseAuthDelegate> delegate;
+@property(nonatomic,readonly) NSDictionary *credentials;
+
+- (instancetype)initWithDelegate:(id<TRATwitterReverseAuthDelegate>)delegate;
+- (void)requestCredentialsForAccount:(ACAccount *)account completion:(void(^)(NSDictionary *credentials, NSError *error))completion;
 
 @end
