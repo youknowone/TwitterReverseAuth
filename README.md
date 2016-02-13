@@ -5,7 +5,7 @@ Twitter Reverse Auth made easy with a single method!
 
 Implement delegate methods to provide API token and secret.
 
-Cocoapods available.
+CocoaPods available.
 
     ACAccount *account = // your account from ACAccountStore
     TwitterReverseAuth *auth = [[TwitterReverseAuth alloc] initWithDelegate:self];
